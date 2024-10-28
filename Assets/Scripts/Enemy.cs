@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] float _speed = 1f;
@@ -11,15 +12,19 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         gameObject.transform.rotation = _rotation;
-        
     }
 
-    private void Update()
+	private void Awake()
+	{
+		gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+	}
+
+	private void Update()
     {
         Move();
     }
 
-    private void Move()
+	private void Move()
     {
         gameObject.transform.Translate(Vector3.forward * Time.deltaTime * _speed);
     }

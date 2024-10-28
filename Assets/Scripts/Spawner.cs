@@ -29,33 +29,29 @@ public class Spawner : MonoBehaviour
     {
         _pool = new ObjectPool<Enemy>(
             createFunc: () => Instantiate(_prefab),
-            actionOnGet: (enemy) => ActionOnGet(enemy),
-            actionOnRelease: (enemy) => ActionOnRelese(enemy),
-            actionOnDestroy: (enemy) => Destroy(enemy),
+            actionOnGet: (enemy) => OnGet(enemy),
+            actionOnRelease: (enemy) => OnRelese(enemy),
+            actionOnDestroy: (enemy) => Destroy(enemy.gameObject),
             collectionCheck: true,
             defaultCapacity: _poolCapacity,
             maxSize: _poolMaxSize);
     }
 
-    private void ActionOnGet(Enemy enemy)
+    private void OnGet(Enemy enemy)
     {
         Vector3 spawnerPosition = GetRandomSpawnerPosition();
         enemy.transform.position = spawnerPosition;
 
-        if (enemy.TryGetComponent(out Rigidbody rb))
-        {
-            rb.velocity = Vector3.zero;
-        }
+		enemy.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
-        var rotation = GetRandomRotation();
+		var rotation = GetRandomRotation();
         enemy.ChangeRotation(rotation);
         enemy.gameObject.SetActive(true);
         Moved?.Invoke(enemy);
     }
 
-    private void ActionOnRelese(Enemy enemy)
+	private void OnRelese(Enemy enemy)
     {
-
         enemy.gameObject.SetActive(false);
     }
 
