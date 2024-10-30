@@ -35,14 +35,14 @@ public class Spawner : MonoBehaviour
         Vector3 spawnerPosition = GetRandomSpawnerPosition();
         enemy.transform.position = spawnerPosition;
 
-		enemy.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        enemy.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
-		var rotation = GetRandomRotation();
+        var rotation = GetRandomRotation();
         enemy.ChangeRotation(rotation);
         enemy.gameObject.SetActive(true);
     }
 
-	private void OnRelese(Enemy enemy)
+    private void OnRelese(Enemy enemy)
     {
         enemy.gameObject.SetActive(false);
     }

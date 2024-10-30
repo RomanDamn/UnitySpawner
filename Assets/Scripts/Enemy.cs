@@ -14,12 +14,12 @@ public class Enemy : MonoBehaviour
         gameObject.transform.rotation = _rotation;
     }
 
-	private void Awake()
-	{
-		GetComponent<Rigidbody>().velocity = Vector3.zero;
-	}
+    private void Awake()
+    {
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+    }
 
-	private void Update()
+    private void Update()
     {
         Move();
     }
