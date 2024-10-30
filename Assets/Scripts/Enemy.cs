@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] float _speed = 1f;
+    [SerializeField] private float _speed = 1f;
 
     private Quaternion _rotation;
 
@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
 
 	private void Awake()
 	{
-		gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+		GetComponent<Rigidbody>().velocity = Vector3.zero;
 	}
 
 	private void Update()
@@ -24,13 +24,13 @@ public class Enemy : MonoBehaviour
         Move();
     }
 
-	private void Move()
-    {
-        gameObject.transform.Translate(Vector3.forward * Time.deltaTime * _speed);
-    }
-
     public void ChangeRotation(Quaternion rotation)
     {
         _rotation = rotation;
+    }
+
+    private void Move()
+    {
+        transform.Translate(Vector3.forward * Time.deltaTime * _speed);
     }
 }

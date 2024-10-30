@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
-using Random = System.Random;
 
 public class Spawner : MonoBehaviour
 {
@@ -12,17 +11,11 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int _poolCapacity = 5;
     [SerializeField] private int _poolMaxSize = 5;
 
-    private int _spawnersCount = 0;
-    private Random random = new Random();
-
     public ObjectPool<Enemy> _pool;
-
-    public event Action<Enemy> Moved;
 
     private void Start()
     {
         InvokeRepeating(nameof(GetEnemy), 0.0f, _repeatRate);
-        _spawnersCount = _spawnersPosition.Count;
     }
 
     private void Awake()
@@ -47,7 +40,6 @@ public class Spawner : MonoBehaviour
 		var rotation = GetRandomRotation();
         enemy.ChangeRotation(rotation);
         enemy.gameObject.SetActive(true);
-        Moved?.Invoke(enemy);
     }
 
 	private void OnRelese(Enemy enemy)
@@ -62,7 +54,7 @@ public class Spawner : MonoBehaviour
 
     private Vector3 GetRandomSpawnerPosition()
     {
-        int randomSpawnerIndex = random.Next(0, _spawnersCount);
+        int randomSpawnerIndex = UnityEngine.Random.Range(0, _spawnersPosition.Count);
         return _spawnersPosition[randomSpawnerIndex];
     }
 
